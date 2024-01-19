@@ -1,0 +1,112 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9; /* Fondo gris claro */
+    color: #333; /* Texto oscuro */
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.card {
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #3498db; /* Fondo azul */
+    color: #fff; /* Texto blanco */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    transition: box-shadow 0.3s; /* Transición suave de la sombra */
+}
+
+.card:hover {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); /* Aumenta la sombra al pasar el ratón */
+}
+
+.card-header {
+    text-align: center;
+}
+
+.logo {
+    max-width: 200px; /* Ajusta el ancho máximo del logo según tu necesidad */
+    display: block; /* Asegura que el margen automático funcione */
+    margin: 20px auto 10px; /* Margen superior 20px, margen inferior 10px, centrado */
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.card-title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    color: #fff; /* Texto blanco */
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #3498db; /* Azul */
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff; /* Fondo blanco */
+    color: #333; /* Texto oscuro */
+}
+
+/* Personaliza el aspecto del select */
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #3498db; /* Azul */
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff; /* Fondo blanco */
+    color: #333; /* Texto oscuro */
+    height: 42px; /* Ajusta la altura del select */
+    appearance: none; /* Elimina los estilos predeterminados del sistema */
+}
+
+/* Flecha personalizada para el select */
+select::-ms-expand {
+    display: none;
+}
+
+/* Estilos adicionales para el hover del select */
+select:hover {
+    border-color: #2980b9; /* Cambia el color del borde al pasar el ratón */
+}
+
+/* Estilos adicionales para el foco del select */
+select:focus {
+    border-color: #2980b9; /* Cambia el color del borde al obtener el foco */
+}
+
+.btn-primary {
+    background-color: #2980b9; /* Azul más oscuro */
+    border-color: #2980b9; /* Azul más oscuro */
+    color: #fff;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #1c6da8; /* Azul aún más oscuro al pasar el ratón */
+    border-color: #1c6da8; /* Azul aún más oscuro al pasar el ratón */
+}
