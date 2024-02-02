@@ -1,62 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Municipalidad - Pagos</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Municipalidad - Pago</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     <link rel="stylesheet" href="../static/styles.css">
+    <!-- Agrega el script de MercadoPago -->
+    <script src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="card">
-            <div class="card-header text-center">
+            <div class="card-header text-center logo-container">
                 <img src="../img/Logo Castelli Ciudad.png" alt="Logo" class="logo">
             </div>
             <div class="card-body">
-                <h1 class="card-title text-center mb-4">Municipalidad de Castelli</h1>
-                <form action="https://www.mercadopago.com" method="post" target="_blank">
-                    <div class="form-group">
-                        <label for="nombre_apellido">Nombre y Apellido:</label>
-                        <input type="text" class="form-control" id="nombre_apellido" name="nombre_apellido" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="telefono">Teléfono:</label>
-                        <input type="tel" class="form-control" id="telefono" name="telefono" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Motivo:</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="motivo" id="luz" value="luz" required>
-                            <label class="form-check-label" for="luz">Luz</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="motivo" id="internet" value="internet" required>
-                            <label class="form-check-label" for="internet">Internet</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="motivo" id="cable" value="cable" required>
-                            <label class="form-check-label" for="cable">Cable</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="amount">Monto:</label>
-                        <input type="text" class="form-control" id="amount" name="amount" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Descripción:</label>
-                        <input type="text" class="form-control" id="description" name="description" required>
-                    </div>
+                <h1 class="card-title text-center mb-4">Formulario de Pago</h1>
+                <form id="formulario_pago" action="{{ url_for('procesar_pago') }}" method="post">
+                                        <!-- Nombre y Apellido -->
+                                        <div class="form-group row">
+                                            <label for="nombre_apellido" class="col-sm-3 col-form-label">Nombre y Apellido</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="nombre_apellido" name="nombre_apellido" required>
+                                            </div>
+                                        </div>
+                    
+                                        <!-- Teléfono -->
+                                        <div class="form-group row">
+                                            <label for="telefono" class="col-sm-3 col-form-label">Teléfono</label>
+                                            <div class="col-sm-9">
+                                                <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                                            </div>
+                                        </div>
+                    
+                                        <!-- Email -->
+                                        <div class="form-group row">
+                                            <label for="email" class="col-sm-3 col-form-label">Email</label>
+                                            <div class="col-sm-9">
+                                                <input type="email" class="form-control" id="email" name="email" required>
+                                            </div>
+                                        </div>
+                    
+                                        <!-- Motivo -->
+                                        <div class="form-group row">
+                                            <label for="motivo" class="col-sm-3 col-form-label">Motivo</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="motivo" name="motivo" required>
+                                                    <option value="" disabled selected>Seleccionar</option>
+                                                    <option value="Luz">Luz</option>
+                                                    <option value="Internet">Internet</option>
+                                                    <option value="Cable">Cable</option>
+                                                    <option value="Pack Futbol">Pack Futbol</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                    
+                                        <!-- Monto -->
+                                        <div class="form-group row">
+                                            <label for="amount" class="col-sm-3 col-form-label">Monto</label>
+                                            <div class="col-sm-9">
+                                                <input type="number" class="form-control" id="amount" name="amount" required>
+                                            </div>
+                                        </div>
+                    
+                                        <!-- Descripción -->
+                                        <div class="form-group row">
+                                            <label for="description" class="col-sm-3 col-form-label">Descripción</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                                            </div>
+                                        </div>
+
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Pagar</button>
+                        <button type="button" class="btn btn-primary" id="btnPagar">Pagar con MercadoPago</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <!-- Agregar tu script JavaScript -->
+    <script>
+        // Agregar cualquier lógica adicional para el frontend si es necesario
+
+        // Agregar el evento click al botón de pago con MercadoPago
+        document.getElementById('btnPagar').addEventListener('click', function() {
+            // Lógica para inicializar MercadoPago y enviar los datos del formulario
+            const formulario = document.getElementById('formulario_pago');
+            const monto = document.getElementById('amount').value;
+
+            // Inicializar MercadoPago con tu clave de integración
+            const mercadoPago = new MercadoPago('tu-clave-de-integracion', {
+                locale: 'es-AR'
+            });
+
+            // Crear un objeto de preferencia con los datos del pago
+            const preference = {
+                items: [{
+                    title: 'Pago de servicios',
+                    quantity: 1,
+                    currency_id: 'ARS',
+                    unit_price: parseFloat(monto)
+                }],
+                back_urls: {
+                    success: 'URL_SUCCESS',
+                    failure: 'URL_FAILURE',
+                    pending: 'URL_PENDING'
+                }
+                // Otros parámetros según tus necesidades
+            };
+
+            // Crear y abrir la ventana de pago de MercadoPago
+            mercadoPago.checkout({
+                preference: preference,
+                autoOpen: true
+            });
+        });
+    </script>
 </body>
 </html>
