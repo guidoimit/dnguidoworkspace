@@ -46,7 +46,7 @@ def procesar_pago():
     preference_result = mp.create_preference(preference)
     payment_url = preference_result['response']['sandbox_init_point']  # Usa 'init_point' en producción
 
-    # Redirige al usuario a la página de pago de MercadoPago
+    #Redirige al usuario a la página de pago de MercadoPago
     return redirect(payment_url)
 
 # Rutas adicionales para manejar redirecciones de MercadoPago
